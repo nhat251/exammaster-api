@@ -1,0 +1,40 @@
+# Build & IDE
+bin/
+obj/
+.vs/
+.vscode/
+
+# Logs & temp
+*.log
+*.tmp
+[Ll]ogs/
+
+# User configs
+*.user
+*.suo
+
+# Test outputs
+TestResults/
+coverage*
+
+# Packages
+packages/
+*.nupkg
+*.snupkg
+*.nuget.props
+*.nuget.targets
+
+# Publish
+*.pubxml
+PublishScripts/
+
+# Node modules (frontend)
+node_modules/
+dist/
+
+# Database
+*.mdf
+*.ldf
+
+# Misc
+.env

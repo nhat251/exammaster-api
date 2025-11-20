@@ -1,0 +1,8 @@
+* text=auto
+*.sln merge=binary
+*.csproj merge=binary
+*.vbproj merge=binary
+*.fsproj merge=binary
+*.png binary
+*.jpg binary
+*.gif binary
