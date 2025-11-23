@@ -27,6 +27,9 @@ namespace Common.Exceptions
 
         public static readonly ErrorDetail REGISTER_FAILED =
             new(HttpStatusCode.BadRequest, "Register failed");
+
+        public static readonly ErrorDetail INVALID_INPUT =
+            new(HttpStatusCode.BadRequest, "Invalid input");
     }
 
     public record ErrorDetail(HttpStatusCode HttpStatusCode, string Message);

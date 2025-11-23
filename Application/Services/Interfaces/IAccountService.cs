@@ -10,8 +10,8 @@ namespace Application.Services.Interfaces
 {
     public interface IAccountService
     {
-        public Task<AuthResponse> LoginAsync(LoginRequest loginRequest);
-        public Task<AuthResponse> RegisterAsync(RegisterRequest registerRequest);
+        public Task<AuthResponse> LoginAsync(LoginRequestDTO loginRequest);
+        public Task<AuthResponse> RegisterAsync(RegisterRequestDTO registerRequest);
         public Task<TokenResponse> RefreshTokenAsync(string refreshTokenStr);
         public Task<bool> LogOutAsync(string accessToken);
     }

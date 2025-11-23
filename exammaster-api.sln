@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "codebase-api", "codebase-api\codebase-api.csproj", "{66A2DECE-5FB7-495F-9A4D-273BF22884D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "exammaster-api", "exammaster-api\exammaster-api.csproj", "{66A2DECE-5FB7-495F-9A4D-273BF22884D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Config", "Config\Config.csproj", "{9ED00A80-706E-40C3-AAB6-61D20E7F07C9}"
 EndProject

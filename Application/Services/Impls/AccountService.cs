@@ -1,10 +1,13 @@
-using Application.DTOs.Responses;
 using Application.DTOs.Requests;
+using Application.DTOs.Responses;
 using Application.Services.Interfaces;
+using Common.Exceptions;
+using Common.Utils;
 using Config;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -13,7 +16,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Common.Exceptions;
 
 namespace Application.Services.Impls
 {
@@ -40,23 +42,23 @@ namespace Application.Services.Impls
             _logger = logger;
         }
 
-        public async Task<AuthResponse> LoginAsync(LoginRequest loginRequest)
+        public async Task<AuthResponse> LoginAsync(LoginRequestDTO loginRequest)
         {
             // Log user attempt
             _logger.LogInformation("Login attempt for username: {UserName}", loginRequest.UserName);
 
+            loginRequest.UserName = StringUtils.TrimAndLower(loginRequest.UserName) ?? throw new AppException(ErrorCode.INVALID_INPUT);
+
             var user = await _userManager.FindByNameAsync(loginRequest.UserName);
 
-            // N?u user không t?n t?i, v?n check fake password d? tránh timing attack
+            // Neu user khong ton tai van check de tranh timing attack
             if (user == null)
             {
                 _logger.LogWarning("Invalid login attempt - user not found: {UserName}", loginRequest.UserName);
 
                 // fake check passwork hash
-                //            _userManager.PasswordHasher.VerifyHashedPassword(new ApplicationUser(), new PasswordHasher<ApplicationUser>()
-                //.HashPassword(new ApplicationUser(), "fake_password"), "fake");
-
-                await Task.Delay(200);
+                _userManager.PasswordHasher.VerifyHashedPassword(new ApplicationUser(), new PasswordHasher<ApplicationUser>()
+    .HashPassword(new ApplicationUser(), "fake_password"), "fake");
 
                 return new AuthResponse
                 {
@@ -80,8 +82,14 @@ namespace Application.Services.Impls
             return await CreateSuccessfulAuthResponse(user);
         }
 
-        public async Task<AuthResponse> RegisterAsync(RegisterRequest registerRequest)
+        public async Task<AuthResponse> RegisterAsync(RegisterRequestDTO registerRequest)
         {
+            registerRequest.UserName = StringUtils.TrimAndLower(registerRequest.UserName) ?? throw new AppException(ErrorCode.INVALID_INPUT);
+            if (registerRequest.Email != null)
+            {
+                registerRequest.Email = StringUtils.TrimAndLower(registerRequest.Email);
+            }
+
             using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             var existingUser = await _userManager.FindByNameAsync(registerRequest.UserName);
             if (existingUser != null)

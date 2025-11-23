@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Validators
 {
-    public class UserRequestValidator : AbstractValidator<RegisterRequest>
+    public class UserRequestValidator : AbstractValidator<RegisterRequestDTO>
     {
         public UserRequestValidator() {
             RuleFor(x => x.UserName)

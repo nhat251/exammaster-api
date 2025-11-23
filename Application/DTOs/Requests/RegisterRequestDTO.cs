@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Application.DTOs.Requests
 {
-    public class RegisterRequest
+    public class RegisterRequestDTO
     {
         [Required]
         public string FullName { get; set; } = string.Empty;

@@ -30,7 +30,7 @@ namespace codebase_api.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<ApiResponse<Object>>> Login([FromBody] LoginRequest loginRequest)
+        public async Task<ActionResult<ApiResponse<Object>>> Login([FromBody] LoginRequestDTO loginRequest)
         {
             AuthResponse res = await _accountService.LoginAsync(loginRequest);
 
@@ -54,7 +54,7 @@ namespace codebase_api.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<ActionResult<ApiResponse<Object>>> Register([FromBody] RegisterRequest registerRequest)
+        public async Task<ActionResult<ApiResponse<Object>>> Register([FromBody] RegisterRequestDTO registerRequest)
         {
             AuthResponse res = await _accountService.RegisterAsync(registerRequest);
 
