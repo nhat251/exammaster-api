@@ -15,5 +15,7 @@ namespace Application.DTOs.Responses
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
         public string? Email { get; set; }
+        public string? AvatarUrl { get; set; }
+        public int Balance { get; set; }
     }
 }

@@ -1,3 +1,3 @@
-cd ./codebase-api
+cd ./exammaster-api
 
 dotnet watch run

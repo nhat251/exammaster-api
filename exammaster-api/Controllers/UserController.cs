@@ -29,6 +29,8 @@ namespace codebase_api.Controllers
         }
 
         [HttpPost("paging")]
+        [Authorize]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult<ApiResponse<PageResult<UserResponse>>>> GetUsersWithPagination([FromBody] GetUserRequest getUserRequest)
         {
             var result = await _userService.GetPagedUsers(getUserRequest);
