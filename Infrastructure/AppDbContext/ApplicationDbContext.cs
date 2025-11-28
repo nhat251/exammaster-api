@@ -19,6 +19,7 @@ namespace Infrastructure.AppDbContext
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<UserFavourite> UserFavourites { get; set; }
+        public DbSet<Collection> Collections { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -32,9 +33,18 @@ namespace Infrastructure.AppDbContext
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Exam>()
-                .HasMany(e => e.Tags)
-                .WithMany(t => t.Exams)
-                .UsingEntity(j => j.ToTable("ExamTags"));
+               .HasMany(e => e.Tags)
+               .WithMany(t => t.Exams)
+               .UsingEntity(j => j.ToTable("ExamTags"));
+
+            builder.Entity<Collection>()
+                .HasMany(c => c.Exams)
+                .WithMany()
+                .UsingEntity(j => j.ToTable("ExamCollections"))
+                .HasMany(c => c.Tags)
+                .WithMany()
+                .UsingEntity(j => j.ToTable("TagCollections"));
+
         }
     }
 }

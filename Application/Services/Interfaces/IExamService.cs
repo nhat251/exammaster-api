@@ -14,5 +14,6 @@ namespace Application.Services.Interfaces
         public Task<PageResult<ExamAttempedResponse>> GetUnFinishedExams(string userId, PageRequest pageRequest);
         public Task<string> MarkAsFavourited(Guid examId, string userId);
         public Task<string> UnMarkAsFavourited(Guid examId, string userId);
+        public Task<PageResult<CollectionResponse>> GetCollectionsHasExam(PageRequest pageRequest);
     }
 }

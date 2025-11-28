@@ -47,5 +47,13 @@ namespace exammaster_api.Controllers
 
             return Ok(await _examService.UnMarkAsFavourited(examId, userId!));
         }
+
+        [HttpGet("collections")]
+        public async Task<ActionResult<ApiResponse<PageResult<CollectionResponse>>>> GetAllCollections([FromQuery] PageRequest pageRequest)
+        {
+            // co the them userId de lay cac collection theo user (AI RECOMMEND ~ lien quan toi lich su lam bai cua user) / neu ko co user thi fetch binh thuong
+            return Ok(await _examService.GetCollectionsHasExam(pageRequest));
+        }
+
     }
 }

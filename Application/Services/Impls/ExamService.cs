@@ -28,21 +28,23 @@ namespace Application.Services.Impls
 
 
         private readonly ILogger<AccountService> _logger;
+        private readonly IMapper _mapper;
         private readonly IExamRepository _examRepository;
         private readonly IAttempExamRepository _attempExamRepository;
         private readonly IFavouriteRepository _favouriteRepository;
+        private readonly ICollectionRepository _collectionRepository;
 
 
-        private readonly IMapper _mapper;
 
 
-        public ExamService(ILogger<AccountService> logger, IExamRepository examRepository, IAttempExamRepository attempExamRepository, IFavouriteRepository favouriteRepository, IMapper mapper)
+        public ExamService(IMapper mapper, ILogger<AccountService> logger, IExamRepository examRepository, IAttempExamRepository attempExamRepository, IFavouriteRepository favouriteRepository, ICollectionRepository collectionRepository)
         {
             _logger = logger;
+            _mapper = mapper;
             _examRepository = examRepository;
             _attempExamRepository = attempExamRepository;
             _favouriteRepository = favouriteRepository;
-            _mapper = mapper;
+            _collectionRepository = collectionRepository;
         }
 
         public async Task<PageResult<ExamAttempedResponse>> GetUnFinishedExams(string userId, PageRequest pageRequest)
@@ -119,6 +121,21 @@ namespace Application.Services.Impls
             return "Done";
         }
 
+        public async Task<PageResult<CollectionResponse>> GetCollectionsHasExam(PageRequest pageRequest)
+        {
+            _logger.LogInformation("Fetching {} exam collections in page {}", pageRequest.Size, pageRequest.Page);
 
+            PageResult<Collection> collections = await _collectionRepository.GetPagedAsync(
+                                                                        predicate: c => c.Exams.Any(),
+                                                                        pageRequest,
+                                                                        c => c.Exams, c => c.Tags);
+            return new PageResult<CollectionResponse>
+            {
+                Items = [.. collections.Items.Select(c => _mapper.Map<CollectionResponse>(c))],
+                Page = collections.Page,
+                Size = collections.Size,
+                TotalItems = collections.TotalItems
+            };
+        }
     }
 }

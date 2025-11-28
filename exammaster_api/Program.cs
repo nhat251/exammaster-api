@@ -163,6 +163,7 @@ namespace exammaster_api
             builder.Services.AddScoped<IExamRepository, ExamRepository>();
             builder.Services.AddScoped<IAttempExamRepository, AttempExamRepository>();
             builder.Services.AddScoped<IFavouriteRepository, FavouriteRepository>();
+            builder.Services.AddScoped<ICollectionRepository, CollectionRepository>();
             //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             builder.Services.AddSingleton<JwtSecurityTokenHandler>();
