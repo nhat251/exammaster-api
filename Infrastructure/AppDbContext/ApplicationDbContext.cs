@@ -15,6 +15,10 @@ namespace Infrastructure.AppDbContext
         }
         public DbSet<UserRefreshToken> RefreshTokens { get; set; }
         public DbSet<InvalidToken> InvalidTokens { get; set; }
+        public DbSet<AttempExam> AttempExams { get; set; }
+        public DbSet<Exam> Exams { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<UserFavourite> UserFavourites { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -27,8 +31,10 @@ namespace Infrastructure.AppDbContext
                 .HasForeignKey(rt => rt.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            
-
+            builder.Entity<Exam>()
+                .HasMany(e => e.Tags)
+                .WithMany(t => t.Exams)
+                .UsingEntity(j => j.ToTable("ExamTags"));
         }
     }
 }

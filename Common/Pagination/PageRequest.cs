@@ -8,7 +8,7 @@ namespace Common.Pagination
 {
     public class PageRequest
     {
-
+        public PageRequest() { }
         public PageRequest(int currentPage, int size, string? sortBy, string sortOrder)
         {
             Page = currentPage;

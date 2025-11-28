@@ -30,6 +30,9 @@ namespace Common.Exceptions
 
         public static readonly ErrorDetail INVALID_INPUT =
             new(HttpStatusCode.BadRequest, "Invalid input");
+
+        public static readonly ErrorDetail ENTITY_NOT_FOUND =
+            new(HttpStatusCode.BadRequest, "not found");
     }
 
     public record ErrorDetail(HttpStatusCode HttpStatusCode, string Message);

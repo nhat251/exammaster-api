@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace codebase_api.Controllers
+namespace exammaster_api.Controllers
 {
     [ApiController]
     [Route("api/users")]

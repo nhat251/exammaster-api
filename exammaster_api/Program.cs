@@ -15,7 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace codebase_api
+namespace exammaster_api
 {
     public class Program
     {
@@ -155,10 +155,14 @@ namespace codebase_api
             builder.Services.AddScoped<ICookieService, CookieService>();
             builder.Services.AddScoped<IRoleService, RoleService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IExamService, ExamService>();
 
             builder.Services.AddScoped<ITokenInvalidRepository, TokenInvalidRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
+            builder.Services.AddScoped<IExamRepository, ExamRepository>();
+            builder.Services.AddScoped<IAttempExamRepository, AttempExamRepository>();
+            builder.Services.AddScoped<IFavouriteRepository, FavouriteRepository>();
             //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             builder.Services.AddSingleton<JwtSecurityTokenHandler>();

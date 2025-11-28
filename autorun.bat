@@ -1,3 +1,5 @@
-cd ./exammaster-api
+cd ./exammaster_api
 
 dotnet watch run
+
+pause

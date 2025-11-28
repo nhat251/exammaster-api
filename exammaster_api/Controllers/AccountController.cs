@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 
 
 
-namespace codebase_api.Controllers
+namespace exammaster_api.Controllers
 {
     [ApiController]
     [Route("api/auth")]
