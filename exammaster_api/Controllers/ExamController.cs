@@ -27,7 +27,14 @@ namespace exammaster_api.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            return Ok(await _examService.GetUnFinishedExams(userId!, pageRequest));
+            ApiResponse<PageResult<ExamAttempedResponse>> response = new ApiResponse<PageResult<ExamAttempedResponse>>
+            {
+                Result = await _examService.GetUnFinishedExams(userId!, pageRequest),
+                Message = "Unfinished exams retrieved successfully",
+                Code = 1000
+            };
+
+            return Ok(response);
         }
 
         [HttpPost("mark-as-favourited")]
@@ -36,7 +43,14 @@ namespace exammaster_api.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            return Ok(await _examService.MarkAsFavourited(examId, userId!));
+            ApiResponse<string> response = new ApiResponse<string>
+            {
+                Result = await _examService.MarkAsFavourited(examId, userId!),
+                Message = "Exam marked as favourited successfully",
+                Code = 1000
+            };
+
+            return Ok(response);
         }
 
         [HttpDelete("unmark-as-favourited")]
@@ -45,14 +59,29 @@ namespace exammaster_api.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            return Ok(await _examService.UnMarkAsFavourited(examId, userId!));
+            ApiResponse<string> response = new ApiResponse<string>
+            {
+                Result = await _examService.UnMarkAsFavourited(examId, userId!),
+                Message = "Exam unmarked as favourited successfully",
+                Code = 1000
+            };
+
+            return Ok(response);
         }
 
         [HttpGet("collections")]
         public async Task<ActionResult<ApiResponse<PageResult<CollectionResponse>>>> GetAllCollections([FromQuery] PageRequest pageRequest)
         {
             // co the them userId de lay cac collection theo user (AI RECOMMEND ~ lien quan toi lich su lam bai cua user) / neu ko co user thi fetch binh thuong
-            return Ok(await _examService.GetCollectionsHasExam(pageRequest));
+
+            ApiResponse<PageResult<CollectionResponse>> response = new ApiResponse<PageResult<CollectionResponse>>
+            {
+                Result =  await _examService.GetCollectionsHasExam(pageRequest),
+                Message = "Collections retrieved successfully",
+                Code = 1000
+            };
+
+            return Ok(response);
         }
 
     }

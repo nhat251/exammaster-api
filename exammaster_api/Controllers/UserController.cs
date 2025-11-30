@@ -28,19 +28,7 @@ namespace exammaster_api.Controllers
             });
         }
 
-        [HttpPost("paging")]
-        [Authorize]
-        //[Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ApiResponse<PageResult<UserResponse>>>> GetUsersWithPagination([FromBody] GetUserRequest getUserRequest)
-        {
-            var result = await _userService.GetPagedUsers(getUserRequest);
 
-            return Ok(new ApiResponse<PageResult<UserResponse>>
-            {
-                Message = "User info retrieved successfully",
-                Result = result
-            });
-        }
     }
 
 }

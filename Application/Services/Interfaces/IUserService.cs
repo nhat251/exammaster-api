@@ -1,6 +1,7 @@
 using Application.DTOs.Requests;
 using Application.DTOs.Responses;
 using Common.Pagination;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,8 @@ namespace Application.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserResponse> GetByIdAsync(string id);
-
-        Task<PageResult<UserResponse>> GetPagedUsers(GetUserRequest request);
-
+        public Task<UserResponse> GetByIdAsync(string id);
+        public Task<PageResult<UserResponse>> GetPagedUsers(PageRequest request);
+        public Task<UserResponse> MapUserResponseAsync(ApplicationUser user);
     }
 }

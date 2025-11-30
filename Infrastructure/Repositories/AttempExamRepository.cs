@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Pagination;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -14,5 +16,6 @@ namespace Infrastructure.Repositories
         public AttempExamRepository(ApplicationDbContext context) : base(context)
         {
         }
+
     }
 }

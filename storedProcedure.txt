@@ -1,0 +1,56 @@
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace Infrastructure.Migrations
+{
+    /// <inheritdoc />
+    public partial class Add_SP : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql(@"
+                CREATE PROCEDURE dbo.GetLeaderboardAll
+                AS
+                BEGIN
+                    SET NOCOUNT ON;
+
+                    ;WITH PassedPerExam AS (
+                        SELECT 
+                            a.UserId,
+                            a.ExamId,
+                            MAX(e.Points) AS Points
+                        FROM AttempExams a
+                        INNER JOIN Exams e
+                            ON a.ExamId = e.Id
+                        WHERE a.IsFinished = 1
+                          AND CAST(a.CompletedCount AS FLOAT) * 100.0 / e.TotalQuestion >= e.RequiredPercentToPass
+                        GROUP BY a.UserId, a.ExamId
+                    ),
+                    TotalPointsPerUser AS (
+                        SELECT 
+                            UserId,
+                            SUM(Points) AS TotalPoints
+                        FROM PassedPerExam
+                        GROUP BY UserId
+                    )
+                    SELECT 
+                        u.Id AS UserId,
+                        u.UserName,
+                        u.FullName,
+                        ISNULL(tp.TotalPoints, 0) AS TotalPoints
+                    FROM AspNetUsers u
+                    LEFT JOIN TotalPointsPerUser tp
+                        ON u.Id = tp.UserId;
+                END
+            ");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS dbo.GetLeaderboardAll");
+        }
+    }
+}

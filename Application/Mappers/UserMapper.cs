@@ -11,6 +11,7 @@ namespace Application.Mappers
         public UserMapper()
         {
             CreateMap<ApplicationUser, UserResponse>();
+
             CreateMap(typeof(PageResult<>), typeof(PageResult<>));
         }
     }

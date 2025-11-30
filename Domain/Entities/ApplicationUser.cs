@@ -10,7 +10,6 @@ namespace Domain.Entities
         public DateTime? DateOfBirth { get; set; }
         public bool IsActive { get; set; } = true;
         public string? AvatarUrl { get; set; } 
-        public int Balance { get; set; } = 0;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }

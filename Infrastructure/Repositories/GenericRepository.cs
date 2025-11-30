@@ -1,12 +1,13 @@
 using Azure;
+using Common.Pagination;
+using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
-using System.Linq.Dynamic.Core;
-using Common.Pagination;
 
 namespace Infrastructure.Repositories
 {
@@ -21,7 +22,7 @@ namespace Infrastructure.Repositories
             _dbSet = _context.Set<T>();
         }
         public async Task<IEnumerable<T>> GetAllAsync(
-            Expression<Func<T, bool>> predicate,
+            Expression<Func<T, bool>>? predicate = null,
             params Expression<Func<T, object>>[] includes
         )
         {
@@ -75,7 +76,7 @@ namespace Infrastructure.Repositories
             if (pageRequest != null)
             {
                 // Apply sorting
-                if (!string.IsNullOrWhiteSpace(pageRequest.SortBy))
+                if (!string.IsNullOrWhiteSpace(pageRequest.OrderBy))
                 {
                     // Xác d?nh chi?u s?p x?p (asc/desc)
                     var sortOrder = pageRequest.SortOrder.Equals("desc", StringComparison.OrdinalIgnoreCase)
@@ -83,7 +84,7 @@ namespace Infrastructure.Repositories
                         : "ascending";
 
                     // S? d?ng System.Linq.Dynamic.Core d? OrderBy d?ng
-                    query = query.OrderBy($"{pageRequest.SortBy} {sortOrder}");
+                    query = query.OrderBy($"{pageRequest.OrderBy} {sortOrder}");
                 }
 
                 // Apply pagination
@@ -114,7 +115,7 @@ namespace Infrastructure.Repositories
 
 
         public async Task<T?> GetAsync(
-                Expression<Func<T, bool>> predicate,
+            Expression<Func<T, bool>>? predicate = null,
                 params Expression<Func<T, object>>[] includes
             )
         {
@@ -185,5 +186,7 @@ namespace Infrastructure.Repositories
 
             return entity;
         }
+        public IQueryable<T> Query() => _dbSet.AsQueryable();
+
     }
 }

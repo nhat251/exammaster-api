@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,5 +21,13 @@ namespace Domain.Entities
         public DateTime ExpiredAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public DateTime? SubmitAt { get; set; }
+
+        public bool IsPassed()
+        {
+            var passedPercent = CompletedCount * 100.0 / Exam.TotalQuestion;
+            return passedPercent >= Exam.RequiredPercentToPass;
+        }
+
+
     }
 }

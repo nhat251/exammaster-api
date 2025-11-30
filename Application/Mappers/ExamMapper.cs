@@ -18,8 +18,9 @@ namespace Application.Mappers
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Exam.Title))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Exam.Description))
                 .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => src.Exam.Duration))
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Exam.Price))
+                .ForMember(dest => dest.Points, opt => opt.MapFrom(src => src.Exam.Points))
                 .ForMember(dest => dest.TotalQuestion, opt => opt.MapFrom(src => src.Exam.TotalQuestion))
+                .ForMember(dest => dest.RequiredPercentToPass, opt => opt.MapFrom(src => src.Exam.RequiredPercentToPass))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Exam.Tags))
 
                 .ForMember(dest => dest.AttempId, opt => opt.MapFrom(src => src.Id))

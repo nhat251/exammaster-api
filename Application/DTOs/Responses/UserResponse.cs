@@ -16,6 +16,6 @@ namespace Application.DTOs.Responses
         public DateTime CreatedAt { get; set; }
         public string? Email { get; set; }
         public string? AvatarUrl { get; set; }
-        public int Balance { get; set; }
+        public int TotalPoints { get; set; } = 0;
     }
 }

@@ -6,6 +6,7 @@ using Config;
 using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.AppDbContext;
+using Infrastructure.Executors;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -156,6 +157,7 @@ namespace exammaster_api
             builder.Services.AddScoped<IRoleService, RoleService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IExamService, ExamService>();
+            builder.Services.AddScoped<ILeaderBoardService, LeaderBoardService>();
 
             builder.Services.AddScoped<ITokenInvalidRepository, TokenInvalidRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -164,7 +166,10 @@ namespace exammaster_api
             builder.Services.AddScoped<IAttempExamRepository, AttempExamRepository>();
             builder.Services.AddScoped<IFavouriteRepository, FavouriteRepository>();
             builder.Services.AddScoped<ICollectionRepository, CollectionRepository>();
+
             //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            builder.Services.AddScoped<IDbProcedureExecutor, DbProcedureExecutor>();
 
             builder.Services.AddSingleton<JwtSecurityTokenHandler>();
 

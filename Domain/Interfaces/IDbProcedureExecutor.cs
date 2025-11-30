@@ -1,14 +1,13 @@
-﻿using Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Common.Pagination;
 
 namespace Domain.Interfaces
 {
-    public interface IAttempExamRepository : IGenericRepository<AttempExam, Guid>
+    public interface IDbProcedureExecutor
     {
+        Task<IEnumerable<dynamic>> GetAllUsersAsync();
     }
 }

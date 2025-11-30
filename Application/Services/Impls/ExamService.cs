@@ -27,7 +27,7 @@ namespace Application.Services.Impls
     {
 
 
-        private readonly ILogger<AccountService> _logger;
+        private readonly ILogger<ExamService> _logger;
         private readonly IMapper _mapper;
         private readonly IExamRepository _examRepository;
         private readonly IAttempExamRepository _attempExamRepository;
@@ -37,7 +37,7 @@ namespace Application.Services.Impls
 
 
 
-        public ExamService(IMapper mapper, ILogger<AccountService> logger, IExamRepository examRepository, IAttempExamRepository attempExamRepository, IFavouriteRepository favouriteRepository, ICollectionRepository collectionRepository)
+        public ExamService(IMapper mapper, ILogger<ExamService> logger, IExamRepository examRepository, IAttempExamRepository attempExamRepository, IFavouriteRepository favouriteRepository, ICollectionRepository collectionRepository)
         {
             _logger = logger;
             _mapper = mapper;

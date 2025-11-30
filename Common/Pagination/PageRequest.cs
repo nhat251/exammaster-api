@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,17 +9,18 @@ namespace Common.Pagination
     public class PageRequest
     {
         public PageRequest() { }
-        public PageRequest(int currentPage, int size, string? sortBy, string sortOrder)
+        public PageRequest(int currentPage, int size, string? orderBy, string sortOrder)
         {
             Page = currentPage;
             Size = size;
-            SortBy = sortBy;
+            OrderBy = orderBy;
             SortOrder = sortOrder;
         }
 
         public int Page { get; set; } = 1;
         public int Size { get; set; } = 10;
-        public string? SortBy { get; set; } = "Id";
+        public string? OrderBy { get; set; } = "Id";
         public string SortOrder { get; set; } = "asc";
     }
 }
+

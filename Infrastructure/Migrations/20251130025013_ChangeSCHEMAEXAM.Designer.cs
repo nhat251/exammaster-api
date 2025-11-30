@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251128122821_addCollection")]
-    partial class addCollection
+    [Migration("20251130025013_ChangeSCHEMAEXAM")]
+    partial class ChangeSCHEMAEXAM
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,21 @@ namespace Infrastructure.Migrations
                     b.ToTable("ExamCollections", (string)null);
                 });
 
+            modelBuilder.Entity("CollectionTag", b =>
+                {
+                    b.Property<Guid>("CollectionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TagsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CollectionId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("TagCollections", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -50,9 +65,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("AvatarUrl")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Balance")
-                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -206,7 +218,10 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequiredPercentToPass")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -221,7 +236,10 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exams");
+                    b.ToTable("Exams", t =>
+                        {
+                            t.HasCheckConstraint("CK_Exam_RequiredPercentToPass", "[RequiredPercentToPass] <= 100 AND [RequiredPercentToPass] >= 0");
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.InvalidToken", b =>
@@ -251,16 +269,11 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CollectionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CollectionId");
 
                     b.ToTable("Tags");
                 });
@@ -480,6 +493,21 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CollectionTag", b =>
+                {
+                    b.HasOne("Domain.Entities.Collection", null)
+                        .WithMany()
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Entities.AttempExam", b =>
                 {
                     b.HasOne("Domain.Entities.Exam", "Exam")
@@ -497,13 +525,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Exam");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Tag", b =>
-                {
-                    b.HasOne("Domain.Entities.Collection", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("CollectionId");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserFavourite", b =>
@@ -600,11 +621,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.Collection", b =>
-                {
-                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

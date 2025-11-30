@@ -12,11 +12,13 @@ namespace Application.DTOs.Responses
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
         public int Duration { get; set; }
-        public int Price { get; set; }
+        public int Points { get; set; }
         public int TotalQuestion { get; set; }
         public IEnumerable<TagResponse> Tags { get; set; } = Enumerable.Empty<TagResponse>();
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+        public int PassPercent { get; set; }
+
     }
 }

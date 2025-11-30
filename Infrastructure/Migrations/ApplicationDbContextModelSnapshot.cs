@@ -63,9 +63,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("AvatarUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Balance")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -218,7 +215,10 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequiredPercentToPass")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -233,7 +233,10 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exams");
+                    b.ToTable("Exams", t =>
+                        {
+                            t.HasCheckConstraint("CK_Exam_RequiredPercentToPass", "[RequiredPercentToPass] <= 100 AND [RequiredPercentToPass] >= 0");
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.InvalidToken", b =>

@@ -5,38 +5,39 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Application.DTOs.Requests;
+using Common.Pagination;
 using Domain.Entities;
 
 namespace Application.Specifications
 {
     public class UserSpecifications
     {
-        public static Expression<Func<ApplicationUser, bool>> GetUserByRequest(GetUserRequest request)
+        public static Expression<Func<ApplicationUser, bool>> GetUserByRequest(PageRequest request)
         {
             // B?t d?u v?i bi?u th?c true d? có th? chain thêm filter
             Expression<Func<ApplicationUser, bool>> predicate = u => true;
 
-            if (!string.IsNullOrWhiteSpace(request.Username))
-            {
-                predicate = predicate.AndAlso(u =>
-                    u.UserName.ToLower().Contains(request.Username.ToLower()));
-            }
+            //if (!string.IsNullOrWhiteSpace(request.Username))
+            //{
+            //    predicate = predicate.AndAlso(u =>
+            //        u.UserName.ToLower().Contains(request.Username.ToLower()));
+            //}
 
-            if (!string.IsNullOrWhiteSpace(request.Email))
-            {
-                predicate = predicate.AndAlso(u =>
-                    u.Email.ToLower().Contains(request.Email.ToLower()));
-            }
+            //if (!string.IsNullOrWhiteSpace(request.Email))
+            //{
+            //    predicate = predicate.AndAlso(u =>
+            //        u.Email.ToLower().Contains(request.Email.ToLower()));
+            //}
 
-            if (request.CreatedFrom.HasValue)
-            {
-                predicate = predicate.AndAlso(u => u.CreatedAt >= request.CreatedFrom.Value);
-            }
+            //if (request.CreatedFrom.HasValue)
+            //{
+            //    predicate = predicate.AndAlso(u => u.CreatedAt >= request.CreatedFrom.Value);
+            //}
 
-            if (request.CreatedTo.HasValue)
-            {
-                predicate = predicate.AndAlso(u => u.CreatedAt <= request.CreatedTo.Value);
-            }
+            //if (request.CreatedTo.HasValue)
+            //{
+            //    predicate = predicate.AndAlso(u => u.CreatedAt <= request.CreatedTo.Value);
+            //}
 
             return predicate;
         }

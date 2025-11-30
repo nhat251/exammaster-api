@@ -1,15 +1,18 @@
-using System.Linq.Expressions;
 using Common.Pagination;
+using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+
 namespace Domain.Interfaces
 {
     public interface IGenericRepository<T, TKey> where T : class, IEntity<TKey>
     {
         Task<IEnumerable<T>> GetAllAsync(
-            Expression<Func<T, bool>> predicate,
+            Expression<Func<T, bool>>? predicate = null,
             params Expression<Func<T, object>>[] includes
         );
         Task<T?> GetAsync(
-            Expression<Func<T, bool>> predicate,
+            Expression<Func<T, bool>>? predicate = null,
             params Expression<Func<T, object>>[] includes
         );
 
@@ -24,5 +27,7 @@ namespace Domain.Interfaces
         Task RemoveAsync(T entity);
         Task<List<T>> GetAllByIdsAsync(IEnumerable<TKey> ids, params Expression<Func<T, object>>[] includes);
         Task<T?> GetByIdAsync(TKey id, params Expression<Func<T, object>>[] includes);
+        IQueryable<T> Query();
+
     }
 }

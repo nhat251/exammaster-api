@@ -32,10 +32,21 @@ namespace Infrastructure.AppDbContext
                 .HasForeignKey(rt => rt.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Exam>()
-               .HasMany(e => e.Tags)
-               .WithMany(t => t.Exams)
-               .UsingEntity(j => j.ToTable("ExamTags"));
+            builder.Entity<Exam>(entity =>
+            {
+                entity.HasMany(e => e.Tags)
+                      .WithMany(t => t.Exams)
+                      .UsingEntity(j => j.ToTable("ExamTags"));
+
+                entity.ToTable(tableBuilder =>
+                {
+                    tableBuilder.HasCheckConstraint(
+                        "CK_Exam_RequiredPercentToPass",
+                        "[RequiredPercentToPass] <= 100 AND [RequiredPercentToPass] >= 0"
+                    );
+                });
+            });
+
 
             builder.Entity<Collection>()
                 .HasMany(c => c.Exams)
